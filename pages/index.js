@@ -1,25 +1,39 @@
 import Layout from '../components/MyLayout.js'
-import Link from 'next/link'
+import Markdown from '../components/Markdown'
 
-function getPosts () {
-  return [
-    { id: 'hello-nextjs', title: 'Hello Next.js'},
-    { id: 'learn-nextjs', title: 'Learn Next.js is awesome'},
-    { id: 'deploy-nextjs', title: 'Deploy apps with Zeit'},
-  ]
-}
-
-export default () => (
+export default (props) => (
   <Layout>
-    <h1>My Blog</h1>
-    <ul>
-      {getPosts().map((post) => (
-        <li key={post.id}>
-          <Link as={`/p/${post.id}`} href={`/post?title=${post.title}`}>
-            <a>{post.title}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
+   <h1>{props.url.query.title}</h1>
+   <div className="markdown">
+     <Markdown content={`
+This is our blog post.
+Yes. We can have a [link](/link).
+And we can have a title as well.
+
+### This is a title
+
+And here's the content.
+     `}/>
+   </div>
+   <style jsx global>{`
+     .markdown {
+       font-family: 'Arial';
+     }
+
+     .markdown a {
+       text-decoration: none;
+       color: blue;
+     }
+
+     .markdown a:hover {
+       opacity: 0.6;
+     }
+
+     .markdown h3 {
+       margin: 0;
+       padding: 0;
+       text-transform: uppercase;
+     }
+  `}</style>
   </Layout>
 )
